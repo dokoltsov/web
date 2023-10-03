@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Micro Cloud</title>
+    <link rel="stylesheet" href="../css/code.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <script src="../js/prism.js"></script>
+</head>
+<body>
+<header>
+    <div class="container">
+        <h1>The Micro Cloud</h1>
+        <p>Cloud-native microservice excellence</p>
+    </div>
+</header>
+<main>
+    <div class="container">
+
+        <section>
+            <h2>
+                This is a simple Go microservice
+            </h2>
+            <p>
+                This microservice is written in Go and uses the Gorilla Mux router. It has two endpoints, one for GET,
+                and one for POST. The POST endpoint takes a JSON body and returns a JSON response.
+            </p>
+        </section>
+
+        <section>
+            <div class="code-header">
+                ./cmd/main.go
+            </div>
+            <div class="code-editor">
+                <pre data-line="16-31" class="line-numbers language-go">
+                    <code class="language-go">
+        package main
+
+        import (
+            "encoding/json"
+            "fmt"
+            "github.com/gorilla/mux"
+            "log"
+            "net/http"
+        )
+
+        type Message struct {
+            Text string `json:"message"`
+        }
+
+        func main() {
+
+            // Create a new mux router
+            router := mux.NewRouter()
+
+            // Define routes
+            router.HandleFunc("/api/v1/go", getHandler).Methods("GET")
+            router.HandleFunc("/api/v1/go", postHandler).Methods("POST")
+            router.HandleFunc("/healthz", healthzHandler).Methods("GET")
+            router.HandleFunc("/readyz", readyzHandler).Methods("GET")
+
+            // Start server
+            log.Print("Starting go server on port 8080")
+            log.Fatal(http.ListenAndServe(":8080", router))
+
+        }
+
+        func getHandler(w http.ResponseWriter, r *http.Request) {
+            // Handle GET request
+            log.Println("GET request received")
+            message := Message{Text: "Hello World • GET"}
+            w.Header().Set("Content-Type", "application/json")
+            w.WriteHeader(http.StatusTeapot)
+            err := json.NewEncoder(w).Encode(message)
+            if err != nil {
+                fmt.Println(err)
+                return
+            }
+        }
+
+        func postHandler(w http.ResponseWriter, r *http.Request) {
+            // Handle POST request
+            log.Println("POST request received")
+
+            // get x from request body
+            var x Message
+            err := json.NewDecoder(r.Body).Decode(&x)
+            if err != nil {
+                fmt.Println(err)
+                return
+            }
+
+            message := Message{Text: "Hello World • POST : " + x.Text}
+            w.Header().Set("Content-Type", "application/json")
+            w.WriteHeader(http.StatusTeapot)
+            err = json.NewEncoder(w).Encode(message)
+            if err != nil {
+                fmt.Println(err)
+                return
+            }
+        }
+
+        func healthzHandler(w http.ResponseWriter, r *http.Request) {
+            // Health check handler
+            log.Println("Health check request received")
+            w.WriteHeader(http.StatusOK)
+        }
+
+        func readyzHandler(w http.ResponseWriter, r *http.Request) {
+            // Readiness check handler
+            log.Println("Readiness check request received")
+            w.WriteHeader(http.StatusOK)
+        }
+                    </code>
+                </pre>
+            </div>
+        </section>
+
+
+    </div>
+</main>
+<footer>
+    <div class="container">
+        <p>&copy; 2023 The Micro Cloud
+            <a href="https://github.com/interbellum" target="_blank" rel="noopener noreferrer">
+                <span style="color: var(--cyberpunk-pink);">
+                    👩‍💻
+                </span>
+            </a>
+        </p>
+    </div>
+</footer>
+</body>
+</html>
