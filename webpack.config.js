@@ -10,7 +10,8 @@ module.exports = {
       prism: './src/js/prism.js',
     },
   output: {
-    filename: 'js/[name].min.js',
+//    filename: 'js/[name].min.js',
+    filename: '[name].min.js',
     path: path.resolve(__dirname, 'dist'),
   },
   module: {
@@ -32,7 +33,8 @@ module.exports = {
               loader: 'url-loader',
               options: {
                 limit: 8192, // Convert files smaller than 8KB to base64-encoded data URLs
-                name: 'fonts/[name].[ext]', // Output font files to 'dist/fonts' directory
+//                name: 'fonts/[name].[ext]', // Output font files to 'dist/fonts' directory
+                name: '[name].[ext]', // Output font files to 'dist/fonts' directory
               },
             },
         ],
@@ -43,7 +45,8 @@ module.exports = {
             {
               loader: 'file-loader',
               options: {
-                name: 'fonts/[name].[ext]', // Output font files to 'dist/fonts' directory
+//                name: 'fonts/[name].[ext]', // Output font files to 'dist/fonts' directory
+                name: '[name].[ext]', // Output font files to 'dist/fonts' directory
               },
             },
           ],
@@ -67,7 +70,8 @@ module.exports = {
       filename: 'code.html',
     }),
     new MiniCssExtractPlugin({
-      filename: 'css/[name].min.css',
+//      filename: 'css/[name].min.css',
+      filename: '[name].min.css',
     }),
   ]
 };

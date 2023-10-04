@@ -4,7 +4,7 @@ webpack:
 
 
 build:
-	docker build -t frontend .
+	docker build -t forzalino/frontend:dev .
 
 
 buildx:
@@ -12,8 +12,8 @@ buildx:
 
 
 run:
-	docker run -it --rm -p 8080:80 frontend
+	docker run -it --rm -p 8080:80 forzalino/frontend:dev
 
 
-npm:
+install packages:
 	npm install --save-dev webpack webpack-cli file-loader url-loader html-webpack-plugin mini-css-extract-plugin css-minimizer-webpack-plugin terser-webpack-plugin @babel/core babel-loader @babel/preset-env css-loader style-loader
