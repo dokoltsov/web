@@ -14,12 +14,19 @@ func main() {
 
 	app.Get("/", IndexHandler())
 	app.Get("/code", CodeHandler())
+	app.Get("/test/:id", TestHandler())
 	app.Get("/css/*file", CssHandler())
 	app.Get("/js/*file", JsHandler())
 	app.Get("/fonts/*file", FileHandler())
 	app.Any("/*", NotFound404Handler())
 	app.Config.Ports.HTTP = 8080
 	app.Run()
+}
+
+func TestHandler() func(ctx aero.Context) error {
+	return func(ctx aero.Context) error {
+		return ctx.String("Test " + ctx.Get("id") + "!")
+	}
 }
 
 func NotFound404Handler() func(ctx aero.Context) error {
