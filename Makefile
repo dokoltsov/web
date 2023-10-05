@@ -3,17 +3,27 @@ webpack:
 	npx webpack --config webpack.config.js --mode production
 
 
-build:
-	docker build -t forzalino/frontend:dev .
+build-local:
+	docker build -t forzalino/web:dev .
 
 
-buildx:
-	docker buildx build -f ./Dockerfile -t forzalino/frontend:dev --push . --platform linux/amd64,linux/arm64
+run-local:
+	docker run -it --rm -p 8080:80 forzalino/web:dev
 
 
-run:
-	docker run -it --rm -p 8080:80 forzalino/frontend:dev
+build-push:
+	docker buildx build -f ./Dockerfile -t forzalino/web:dev --push . --platform linux/amd64,linux/arm64
 
 
-install packages:
+npm-install:
 	npm install --save-dev webpack webpack-cli file-loader url-loader html-webpack-plugin mini-css-extract-plugin css-minimizer-webpack-plugin terser-webpack-plugin @babel/core babel-loader @babel/preset-env css-loader style-loader
+
+
+hey:
+	hey -c 10 -z 30s -m GET goxo.cc
+	# -n num requests
+	# -c num concurrent requests
+	# -z duration of test
+	# -m http method
+	# -q rate limit per second per worker
+	# -t timeout per request
