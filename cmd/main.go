@@ -11,8 +11,10 @@ type Hello struct {
 
 func main() {
 	app := aero.New()
-
 	app.Get("/", IndexHandler())
+	//app.Any("/.well-known/acme-challenge/TeKCBtqdOVONNd90dUtE6K529qHv8uLPVuN6GaYppw0", func(ctx aero.Context) error {
+	//	return ctx.String("TeKCBtqdOVONNd90dUtE6K529qHv8uLPVuN6GaYppw0.QjgUSYn7vkO7dZhYSwD9_vr10k-WG7Snm1YQG03tzdM")
+	//})
 	app.Get("/code", CodeHandler())
 	app.Get("/test/:id", TestHandler())
 	app.Get("/css/*file", CssHandler())
